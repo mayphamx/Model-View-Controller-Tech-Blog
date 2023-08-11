@@ -7,24 +7,31 @@
     <p> Post By: {{user.name}}</p>
 </section>
 
-{{#if logged_in}}
-<form>
-  <div>
-    <label for="comment">Comment</label>
-    <br>
-    <input type="text" id="comment" placeholder="Type your comment here"/>
-    <button id="submit-comment">Submit</button>
-  </div>
-</form>
-{{else}}
-<a href="/login">Log in to add a comment</a>
-{{/if}}
-
-<section class="card">
-  {{#each blog.comments as |comment|}}
-  {{> comment-details}}
-  {{/each}}
+<section>
+  <ul id="comments-list">
+    <!-- Comments will be added here dynamically -->
+  </ul>
 </section>
 
+{{#if logged_in}}
+<form class="new-comment-form" data-blog_id={{id}}>
+  <div>
+    <label for="comment">Comment</label>
+    <input type="text" id="comment" placeholder="Type your comment here"/>
+    <button id="submit-comment">Submit</button>
+</form>
+{{else}}
+<a href="/login">Log in</a>
+{{/if}}
 
-<script src="./js/blog.js"></script>
+<h2>Comments</h2>
+
+  {{#each comments as |comment|}}
+<section class="card">
+  <p>{{comment.text}}</p>
+  <p>{{comment.user.name}} {{format_date date_created}}</p>
+</section>
+  {{/each}}
+
+
+<script src="/js/comments.js"></script>
